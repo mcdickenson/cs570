@@ -1,4 +1,5 @@
 class Fifteens
+  attr_reader :start, :goal
 
   ROWS = 4
   COLS = 4
@@ -11,9 +12,8 @@ class Fifteens
     # todo: create a state
 
     # create a start node
-    start = SearchNode.new(board)
+    @start = SearchNode.new(board)
     # goal = SearchNode.new("blah")
-    puts start
     # create a heuristic function
   end
 
@@ -21,7 +21,32 @@ class Fifteens
     "#{@board}"
   end
 
+  def heuristic(node, goal=@goal)
+    # manhattan distance for now
+    dist = 0
+    # todo: add data on knights' moves later 
+    # this is important so that h is admissable
+    goal.each_with_index do |row, row_ix|
+      row.each_with_index do |cell, col_ix|
+        current_row, current_col = Fifteens.find_position(cell, node.state)
+        # find the corresponding cell in node
+        # what's the horizontal distance?
+        dist += (row_ix - current_row).abs + (col_ix-current_col).abs # min of this or knight moves
+        # what's the vertical distance? 
+      end
+    end
+    dist
+  end
+
+  def self.find_position(item, board)
+    row = board.find_index { |row| row.include? item }
+    col = board[row].find_index(item)
+    [row, col]
+  end
+
   class SearchNode
+
+    attr_reader :state
     
     def initialize(state)
       @state = state      
@@ -36,8 +61,9 @@ class Fifteens
     def neighbors
       return @neighbors if @neighbors
       # horizontal moves
-      empty_row = @state.find_index { |row| row.include? 0 }
-      empty_col = @state[empty_row].find_index(0)
+      # empty_row = @state.find_index { |row| row.include? 0 }
+      # empty_col = @state[empty_row].find_index(0)
+      empty_row, empty_col = Fifteens.find_position(0, @state) 
       h = horizontal_moves(empty_row, empty_col)
       # vertical moves
       v = vertical_moves(empty_row, empty_col)
@@ -86,19 +112,4 @@ class Fifteens
 
 
 
-end
-
-
-ary = ARGF.each_with_object([]) { |line, ary| ary << line.split.map { |x| x.to_i } }
-# puts ary
-# puts ary.size
-# puts ary.first.size
-
-f = Fifteens.new(ary)
-puts "f: #{f}"
-
-s = Fifteens::SearchNode.new(ary)
-
-s.neighbors.each do |n|
-  puts "n: #{n}"
 end
