@@ -18,9 +18,7 @@ class Astar
 
     until to_visit.empty? do
       current = to_visit.sort_by { |node| estimated_cost[node] }.first
-      # puts "current: #{current.class}"
-      # puts "goal:    #{goal.class}"
-      # puts current == goal
+      # puts "current: #{current}"
       return path_from(path_so_far, goal) if current == goal
 
       to_visit.delete(current)
@@ -28,10 +26,11 @@ class Astar
       current.neighbors.each do |neighbor|
         next if visited.include? neighbor
 
+        # puts "cost: #{cost}"
         tentative_cost = cost[current] + 1 # 1=current.distance_to(neighbor)
 
         if (!to_visit.include?(neighbor)) || (tentative_cost < cost[neighbor])
-          path_so_far[neighbor.to_s] = current
+          path_so_far[neighbor] = current
           cost[neighbor] = tentative_cost
           estimated_cost[neighbor] = tentative_cost + heuristic_cost(neighbor, goal)
           to_visit << neighbor unless to_visit.include?(neighbor) # could maybe use an elsif to avoid this
@@ -44,8 +43,9 @@ class Astar
 
   def path_from(path_so_far, current)
     # puts path_so_far.keys
-    if path_so_far.keys.include? current.to_s
-      path = path_from(path_so_far, path_so_far[current.to_s])
+    # puts "current: #{current}"
+    if path_so_far.keys.include? current
+      path = path_from(path_so_far, path_so_far[current])
       path << current
       return path
     else

@@ -8,10 +8,10 @@ ary = ARGF.each_with_object([]) { |line, ary| ary << line.split.map { |x| x.to_i
 
 f = Fifteens.new(ary)
 g = f.goal
-puts "f: #{f}"
+# puts "f: #{f}"
 
 # s = Fifteens::SearchNode.new(ary)
-puts f.heuristic(f.start)
+# puts f.heuristic(f.start)
 
 
 # s.neighbors.each do |n|
@@ -20,4 +20,7 @@ puts f.heuristic(f.start)
 
 a = Astar.new(f.start, f.goal, f.method(:heuristic).to_proc)
 x = a.search
+puts "\nOptimal Solution States:"
 puts x
+
+puts "\nOptimal Solution Length: #{x.size}"

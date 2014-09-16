@@ -50,7 +50,11 @@ class Fifteens
     def ==(obj)
       obj.class == self.class && obj.state == state
     end
-    alias_method :eql, :==
+    alias_method :eql?, :==
+
+    def hash
+      @state.hash
+    end
 
     def neighbors
       return @neighbors if @neighbors
