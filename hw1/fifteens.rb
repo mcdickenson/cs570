@@ -3,22 +3,16 @@ class Fifteens
 
   ROWS = 4
   COLS = 4
+  GOAL = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 0]]
 
   def initialize(board)
     raise "incorrect dimensions for board" unless board.size==ROWS and board.first.size==COLS
-    @board = board
-    @goal = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 0]]
-
-    # todo: create a state
-
-    # create a start node
     @start = SearchNode.new(board)
-    # goal = SearchNode.new("blah")
-    # create a heuristic function
+    @goal  = SearchNode.new(GOAL)
   end
 
   def to_s
-    "#{@board}"
+    "#{@start}"
   end
 
   def heuristic(node, goal=@goal)
@@ -26,13 +20,10 @@ class Fifteens
     dist = 0
     # todo: add data on knights' moves later 
     # this is important so that h is admissable
-    goal.each_with_index do |row, row_ix|
+    goal.state.each_with_index do |row, row_ix|
       row.each_with_index do |cell, col_ix|
         current_row, current_col = Fifteens.find_position(cell, node.state)
-        # find the corresponding cell in node
-        # what's the horizontal distance?
         dist += (row_ix - current_row).abs + (col_ix-current_col).abs # min of this or knight moves
-        # what's the vertical distance? 
       end
     end
     dist
@@ -50,27 +41,28 @@ class Fifteens
     
     def initialize(state)
       @state = state      
-      # puts row
-      # puts col
     end
 
     def to_s
       "#{@state}"
     end
 
+    def ==(obj)
+      obj.class == self.class && obj.state == state
+    end
+    alias_method :eql, :==
+
     def neighbors
       return @neighbors if @neighbors
-      # horizontal moves
-      # empty_row = @state.find_index { |row| row.include? 0 }
-      # empty_col = @state[empty_row].find_index(0)
       empty_row, empty_col = Fifteens.find_position(0, @state) 
+      # horizontal moves
       h = horizontal_moves(empty_row, empty_col)
       # vertical moves
       v = vertical_moves(empty_row, empty_col)
-      # knights moves
+      # todoknights moves
       moves = h.concat(v)
       # puts "moves: #{moves}"
-      @neighbors = h.compact.map { |st| SearchNode.new(st) }
+      @neighbors = moves.compact.map { |st| SearchNode.new(st) }
     end
 
     def horizontal_moves(empty_row, empty_col)

@@ -19,4 +19,5 @@ puts f.heuristic(f.start)
 # end
 
 a = Astar.new(f.start, f.goal, f.method(:heuristic).to_proc)
-a.search
+x = a.search
+puts x
