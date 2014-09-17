@@ -16,17 +16,28 @@ class Fifteens
   end
 
   def heuristic(node, goal=@goal)
-    # manhattan distance for now
     dist = 0
-    # todo: add data on knights' moves later 
-    # this is important so that h is admissable
     goal.state.each_with_index do |row, row_ix|
       row.each_with_index do |cell, col_ix|
         current_row, current_col = Fifteens.find_position(cell, node.state)
-        dist += (row_ix - current_row).abs + (col_ix-current_col).abs # min of this or knight moves
+        next if current_row == row_ix and current_col == col_ix
+        m = manhattan_dist(row_ix, col_ix, current_row, current_col)
+        k = knight_dist(row_ix, col_ix, current_row, current_col)
+        dist += [m, k].min
       end
     end
-    dist
+    dist / 2.0 # todo: avoid double-counting
+  end
+
+  def knight_dist(x1, y1, x2, y2)
+    @knight_dist ||= File.open('knight_distance.txt').first.split.map { |x| x.to_i }
+    i = x1 * 4 + y1
+    j = x2 * 4 + y2
+    @knight_dist[16*i+j]
+  end
+
+  def manhattan_dist(x1, y1, x2, y2)
+    (x1 - x2).abs + (y1-y2).abs
   end
 
   def self.find_position(item, board)
@@ -44,7 +55,13 @@ class Fifteens
     end
 
     def to_s
-      "#{@state}"
+      # "#{@state}"
+      out = ""
+      state.each do |row|
+        row.each { |i| out += " " * (1+(1-(i/10))) + i.to_s }
+        out += "\n"
+      end
+      out += "\n"
     end
 
     def ==(obj)

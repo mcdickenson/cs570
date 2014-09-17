@@ -20,7 +20,7 @@ g = f.goal
 
 a = Astar.new(f.start, f.goal, f.method(:heuristic).to_proc)
 x = a.search
-puts "\nOptimal Solution States:"
+puts "\nOptimal solution states:"
 puts x
 
-puts "\nOptimal Solution Length: #{x.size}"
+puts "\nOptimal solution length: #{x.size}"
