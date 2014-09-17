@@ -64,7 +64,8 @@ class Fifteens
       # vertical moves
       v = vertical_moves(empty_row, empty_col)
       # todoknights moves
-      moves = h.concat(v)
+      k = knights_moves(empty_row, empty_col)
+      moves = h.concat(v).concat(k)
       # puts "moves: #{moves}"
       @neighbors = moves.compact.map { |st| SearchNode.new(st) }
     end
@@ -85,7 +86,17 @@ class Fifteens
       [move_up, move_down]
     end 
 
-    def knights_moves
+    def knights_moves(empty_row, empty_col)
+      [
+        switch(empty_row, empty_col, empty_row-1, empty_col+2),
+        switch(empty_row, empty_col, empty_row-1, empty_col-2),
+        switch(empty_row, empty_col, empty_row+1, empty_col+2),
+        switch(empty_row, empty_col, empty_row+1, empty_col-2),
+        switch(empty_row, empty_col, empty_row-2, empty_col+1),
+        switch(empty_row, empty_col, empty_row-2, empty_col-1),
+        switch(empty_row, empty_col, empty_row+2, empty_col+1),
+        switch(empty_row, empty_col, empty_row+2, empty_col-1),
+      ]
     end
 
     def switch(row1, col1, row2, col2)
