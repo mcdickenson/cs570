@@ -59,35 +59,15 @@ class Fifteens
     def neighbors
       return @neighbors if @neighbors
       empty_row, empty_col = Fifteens.find_position(0, @state) 
-      # horizontal moves
-      h = horizontal_moves(empty_row, empty_col)
-      # vertical moves
-      v = vertical_moves(empty_row, empty_col)
-      # todoknights moves
-      k = knights_moves(empty_row, empty_col)
-      moves = h.concat(v).concat(k)
-      # puts "moves: #{moves}"
-      @neighbors = moves.compact.map { |st| SearchNode.new(st) }
+      @neighbors = moves(empty_row, empty_col).compact.map { |st| SearchNode.new(st) }
     end
 
-    def horizontal_moves(empty_row, empty_col)
-      move_left = switch(empty_row, empty_col, empty_row, empty_col+1)
-      # puts "move left: #{move_left}"
-      move_right = switch(empty_row, empty_col, empty_row, empty_col-1)
-      # puts "move right: #{move_right}"
-      [move_left, move_right]
-    end
-
-    def vertical_moves(empty_row, empty_col)
-      move_up = switch(empty_row, empty_col, empty_row+1, empty_col)
-      # puts "move up: #{move_up}"
-      move_down = switch(empty_row, empty_col, empty_row-1, empty_col)
-      # puts "move down: #{move_down}"
-      [move_up, move_down]
-    end 
-
-    def knights_moves(empty_row, empty_col)
+    def moves(empty_row, empty_col)
       [
+        switch(empty_row, empty_col, empty_row, empty_col-1),
+        switch(empty_row, empty_col, empty_row, empty_col+1),
+        switch(empty_row, empty_col, empty_row+1, empty_col),
+        switch(empty_row, empty_col, empty_row-1, empty_col),
         switch(empty_row, empty_col, empty_row-1, empty_col+2),
         switch(empty_row, empty_col, empty_row-1, empty_col-2),
         switch(empty_row, empty_col, empty_row+1, empty_col+2),
@@ -100,11 +80,9 @@ class Fifteens
     end
 
     def switch(row1, col1, row2, col2)
-      # puts "[#{row1}, #{col1}, #{row2}, #{col2}]"
       return nil if out_of_bounds(row1, col1) or out_of_bounds(row2, col2)
       st = deep_copy(@state)
       st[row1][col1], st[row2][col2] = st[row2][col2], st[row1][col1]
-      # puts "st: #{st}"
       return st
     end
 
