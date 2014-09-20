@@ -8,4 +8,4 @@ result = a.search
 
 puts "\nOptimal solution states:"
 puts result
-puts "\nOptimal solution length: #{result.size}"
+puts "\nOptimal solution length: #{result.size-1}"

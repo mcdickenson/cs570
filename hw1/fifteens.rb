@@ -21,12 +21,11 @@ class Fifteens
       row.each_with_index do |cell, col_ix|
         current_row, current_col = Fifteens.find_position(cell, node.state)
         next if current_row == row_ix and current_col == col_ix
-        m = manhattan_dist(row_ix, col_ix, current_row, current_col)
         k = knight_dist(row_ix, col_ix, current_row, current_col)
-        dist += [m, k].min
+        dist += k
       end
     end
-    dist / 2.0 # todo: avoid double-counting
+    dist / 2.0
   end
 
   def knight_dist(x1, y1, x2, y2)
@@ -34,10 +33,6 @@ class Fifteens
     i = x1 * 4 + y1
     j = x2 * 4 + y2
     @knight_dist[16*i+j]
-  end
-
-  def manhattan_dist(x1, y1, x2, y2)
-    (x1 - x2).abs + (y1-y2).abs
   end
 
   def self.find_position(item, board)
@@ -55,7 +50,6 @@ class Fifteens
     end
 
     def to_s
-      # "#{@state}"
       out = ""
       state.each do |row|
         row.each { |i| out += " " * (1+(1-(i/10))) + i.to_s }
@@ -81,10 +75,6 @@ class Fifteens
 
     def moves(empty_row, empty_col)
       [
-        switch(empty_row, empty_col, empty_row, empty_col-1),
-        switch(empty_row, empty_col, empty_row, empty_col+1),
-        switch(empty_row, empty_col, empty_row+1, empty_col),
-        switch(empty_row, empty_col, empty_row-1, empty_col),
         switch(empty_row, empty_col, empty_row-1, empty_col+2),
         switch(empty_row, empty_col, empty_row-1, empty_col-2),
         switch(empty_row, empty_col, empty_row+1, empty_col+2),
