@@ -13,7 +13,8 @@ class Astar
     to_visit = [start]
 
     path_so_far = {}
-    cost = {start => 0}
+    cost = Hash.new(10**6)
+    cost[start] = 0
     estimated_cost = { start => cost[start]+ heuristic_cost(start, goal) }
 
     until to_visit.empty? do
@@ -26,7 +27,9 @@ class Astar
       current.neighbors.each do |neighbor|
         next if visited.include? neighbor
 
-        # puts "cost: #{cost}"
+        # puts "cost: #{cost.keys}"
+        # puts "current: #{current}"
+        # puts "neighbor: #{neighbor}"
         tentative_cost = cost[current] + 1 # 1=current.distance_to(neighbor)
 
         if (!to_visit.include?(neighbor)) || (tentative_cost < cost[neighbor])

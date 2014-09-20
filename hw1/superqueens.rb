@@ -1,7 +1,7 @@
 class SuperQueens
   attr_reader :start, :goal
 
-  def initialize(size)
+  def initialize(size, goal)
     # 1: start with empty board
     # @board = [[0]*size]*size
     # goal: column sums all == 1, no attacks
@@ -17,8 +17,9 @@ class SuperQueens
 
     @size = size
     @columns = [nil]*size
-    @start = State.new(size**2, SearchNode.new(@columns))
-    @goal = State.new(0, 0) # if size > 4
+    @start = State.new(size**2, size, SearchNode.new(@columns))
+    @goal = State.new(goal, 0) # if size > 4
+    # todo: 3 in the line about should be an input param
 
     # ***
     # 5: random start
@@ -46,20 +47,8 @@ class SuperQueens
     [(x1-x2).abs, (y1-y2).abs] == [2, 1]
   end
 
-  def heuristic(state)
-    attacking_pairs = 0
-    (0..@size-2).each do |col1|
-      row1 = state[col1]
-      (col1+1..@size-1).each do |col2|
-        row2 = state[col2]
-        attacking_pairs += 1 if self.collision(row1, col1, row2, col2)
-      end
-    end
-    attacking_pairs
-  end
-
   class State
-    attr_reader :attacks, :empty_cols
+    attr_reader :attacks, :empty_cols, :node
 
     # number of attacking pairs
     def initialize(attacks, empty_cols, node=nil)
@@ -73,8 +62,16 @@ class SuperQueens
     end
     alias_method :eql?, :==
 
+    def hash
+      node.hash + attacks.hash % empty_cols.hash
+    end
+
     def neighbors
-      @node.neighbors
+      node.neighbors
+    end
+
+    def to_s
+      "#{@node}"
     end
   end
 
@@ -85,14 +82,21 @@ class SuperQueens
       @empty = @columns.find_index nil
     end
 
+    def to_s
+      "#{@columns}"
+    end
+
+    def [](x)
+      @columns[x]
+    end
+
     def neighbors
       return [] unless @empty
       @neighbors ||= valid_moves.map do |x|
         st = deep_copy(@columns)
         st[@empty] = x
         sn = SearchNode.new(st)
-
-        st = State.new(Fifteens::Heuristic(sn), @size-(@empty+1), sn)
+        st = State.new(sn.heuristic, @size-(@empty+1), sn)
       end
     end
 
@@ -100,7 +104,7 @@ class SuperQueens
       puts "checking valid moves"
       possible = []
       (0..@size-1).each do |row|
-        next if on_occupied_space(row, @empty)
+        # next if on_occupied_space(row, @empty)
         possible << row
       end
       possible
@@ -109,7 +113,7 @@ class SuperQueens
     def on_occupied_space(x, y)
       (0..@empty-1).each do |col|
         row = @columns[col]
-        puts collision(row, col, x, y)
+        # puts collision(row, col, x, y)
         return true if SuperQueens.collision(row, col, x, y)
       end
       return false
@@ -119,11 +123,25 @@ class SuperQueens
       Marshal.load(Marshal.dump(obj))
     end
 
-    # todo: boundary checking
-    # def knight_move(x1, y1, x2, y2)
-    #   ary = [(x1-x2).abs, (y1-y2.abs)]
-    #   ary == [1, 2] or ary == [2,1]
-    # end
+    def heuristic(state=@columns, goal=0)
+      puts "\n" * 3
+      puts "state: #{state}"
+      state = state.node if state.respond_to? :node
+      attacking_pairs = 0
+      (0..@size-2).each do |col1|
+        row1 = state[col1]
+        (col1+1..@size-1).each do |col2|
+          row2 = state[col2]
+          next if [row1, col1, row2, col2].include? nil
+          attacking_pairs += 1 if SuperQueens.collision(row1, col1, row2, col2)
+        end
+      end
+      attacking_pairs
+    end
+
+
+
+    # todo: add method for printing board
   end
 end
 
