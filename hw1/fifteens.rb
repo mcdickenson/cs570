@@ -70,7 +70,7 @@ class Fifteens
     alias_method :eql?, :==
 
     def hash
-      @state.hash
+      state.hash
     end
 
     def neighbors
