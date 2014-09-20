@@ -5,29 +5,20 @@ class SuperQueens
     @size = size
     @columns = [nil]*size
     @start = State.new(size**2, size, size, SearchNode.new(@columns))
-    @goal = State.new(goal, 0, 0) # if size > 4
+    @goal = State.new(goal, 0, 0)
   end
 
   def self.collisions(x1, y1, x2, y2)
-    # puts "x1: #{x1} y1: #{y1} x2: #{x2} y2: #{y2}"
-    c = 0
-    c += 1 if (x1 == x2)
-    c += 1 if (y1 == y2) 
-    c += 1 if (x1-x2).abs == (y1-y2).abs
-    c += 1 if [(x1-x2).abs, (y1-y2).abs] == [1, 2]
-    c += 1 if [(x1-x2).abs, (y1-y2).abs] == [2, 1]
-    c
     # (x1 == x2) or 
     # (y1 == y2) or 
-    # (x1-x2).abs == (y1-y2).abs or
-    # [(x1-x2).abs, (y1-y2).abs] == [1, 2] or
-    # [(x1-x2).abs, (y1-y2).abs] == [2, 1]
+    (x1-x2).abs == (y1-y2).abs or
+    [(x1-x2).abs, (y1-y2).abs] == [1, 2] or
+    [(x1-x2).abs, (y1-y2).abs] == [2, 1]
   end
 
   class State
     attr_reader :attacks, :empty_cols, :empty_rows, :node
 
-    # number of attacking pairs
     def initialize(attacks, empty_cols, empty_rows, node=nil)
       @attacks = attacks
       @empty_cols = empty_cols
@@ -80,6 +71,7 @@ class SuperQueens
 
     def neighbors
       return [] unless @empty
+      # todo: add the possibility of switching columns
       @neighbors ||= valid_moves.map do |x|
         st = deep_copy(@columns)
         st[@empty] = x
@@ -91,7 +83,6 @@ class SuperQueens
     end
 
     def valid_moves
-      # puts "checking valid moves"
       possible = []
       (0..@size-1).each do |row|
         next if on_occupied_space(row, @empty)
@@ -103,9 +94,7 @@ class SuperQueens
     def on_occupied_space(x, y)
       (0..@empty-1).each do |col|
         row = @columns[col]
-        # puts collision(row, col, x, y)
-        return true if row == x or col == y or (row-x).abs == (col-y).abs
-        # return true if SuperQueens.collision(row, col, x, y)
+        return true if row == x or col == y
       end
       return false
     end
@@ -115,27 +104,19 @@ class SuperQueens
     end
 
     def heuristic(state=@columns, goal=0)
-      # puts "\n" * 3
-      # puts "state: #{state}"
       state = state.node if state.respond_to? :node
       attacking_pairs = 0
       # (0..@size-2).each do |col1|
-      (0..@size-2).each do |col1|
+      (0..@size-1).each do |col1|
         row1 = state[col1]
         (col1+1..@size-1).each do |col2|
           row2 = state[col2]
-          next if [row1, col1, row2, col2].include? nil
-          attacking_pairs += SuperQueens.collisions(row1, col1, row2, col2)
-          # attacking_pairs += 1 if SuperQueens.collisions(row1, col1, row2, col2)
+          next if [row2, col2].include? nil
+          attacking_pairs += 1 if SuperQueens.collisions(row1, col1, row2, col2)
         end
       end
       attacking_pairs
-      # (attacking_pairs / 2.0).ceil + 1 # avoid double-counting
     end
-
-
-
-    # todo: add method for printing board
   end
 end
 

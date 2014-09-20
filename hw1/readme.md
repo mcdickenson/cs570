@@ -1,13 +1,17 @@
 HW1
 =====
 
+# Environment
+
+This submission has been developed and tested on OS X 10.9 using Ruby 2.0.0-p353.
+
 # A* Implementation
 
 `astar.rb` contains a Ruby implementation of the A* algorithm. The initializer takes a starting state, a goal state, and a heuristic function. (No hard distinction is made in the code between search nodes and states. Although I recognize this difference and we have discussed it in class, this keeps the code slightly simpler.) 
 
 Once an instance of the Astar has been created, the `search` function can be called. When a solution is found, the path for that solution (including the starting node) is returned. If no solution is found, the symbol `:failure` is returned.
 
-# Problem 1
+# Problem 1: Fifteens Puzzle with Knight Moves
 
 ## Description
 
@@ -150,3 +154,37 @@ Optimal solution states:
 Optimal solution length: 10
 ```
 
+# Problem 2: SuperQueens
+
+## Description
+
+`superqueens.rb` contains a Ruby implementation for creating instances of the FiN-Queens puzzle with knight moves.
+
+`superqueens_runner.rb` contains a Ruby script that takes an input parameter, creates an instance of the N-Queens puzzle, searches for a solution with A*, and prints the output.
+
+## Input 
+
+The size of the board is passed as an argument to the Ruby script:
+
+```
+ruby superqueens_runner.rb 7
+```
+
+## Output
+
+The output prints the final layout of the board and the number of attacking pairs. 
+
+Example output for a board of size 7 is:
+
+```
+An optimal placement for a board of size 7:
+1 0 0 0 0 0 0
+0 0 0 1 0 0 0
+0 0 0 0 1 0 0
+0 1 0 0 0 0 0
+0 0 0 0 0 1 0
+0 0 0 0 0 0 1
+0 0 1 0 0 0 0
+
+There are 4 attacking pairs
+```

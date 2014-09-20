@@ -18,9 +18,11 @@ while result == :failure && max_attacks < size
   f = sq.start
   a = Astar.new(f, sq.goal, f.node.method(:heuristic).to_proc)
   result = a.search
-  puts max_attacks
+  # puts max_attacks
   max_attacks += 1
 end
+
+# result.each { |x| puts x.node; puts }
 
 if result == :failure
   puts "No acceptable placement was found"
