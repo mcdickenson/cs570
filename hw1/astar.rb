@@ -5,7 +5,6 @@ class Astar
     @start = start
     @goal  = goal
     self.class.send(:define_method, :heuristic_cost, heuristic)
-    # raise "Start node does not have a distance_to function" unless start.respond_to?(:distance_to)
   end
 
   def search(start=@start, goal=@goal)
@@ -13,14 +12,15 @@ class Astar
     to_visit = [start]
 
     path_so_far = {}
-    cost = Hash.new(10**6)
+    cost = Hash.new(1)
+    # cost = Hash.new(100000)
     cost[start] = 0
     estimated_cost = { start => cost[start]+ heuristic_cost(start, goal) }
 
     until to_visit.empty? do
       current = to_visit.sort_by { |node| estimated_cost[node] }.first
       # puts "current: #{current}"
-      return path_from(path_so_far, goal) if current == goal
+      return path_from(path_so_far, current) if current == goal
 
       to_visit.delete(current)
       visited << current
@@ -30,7 +30,7 @@ class Astar
         # puts "cost: #{cost.keys}"
         # puts "current: #{current}"
         # puts "neighbor: #{neighbor}"
-        tentative_cost = cost[current] + 1 # 1=current.distance_to(neighbor)
+        tentative_cost = cost[current] + 1
 
         if (!to_visit.include?(neighbor)) || (tentative_cost < cost[neighbor])
           path_so_far[neighbor] = current

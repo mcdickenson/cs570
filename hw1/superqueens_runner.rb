@@ -13,7 +13,7 @@ size = ARGV[0].to_i
 result = :failure
 max_attacks = 0
 
-while result == :failure
+while result == :failure && max_attacks < size
   sq = SuperQueens.new(size, max_attacks)
   f = sq.start
   a = Astar.new(f, sq.goal, f.node.method(:heuristic).to_proc)
@@ -21,11 +21,12 @@ while result == :failure
   puts max_attacks
   max_attacks += 1
 end
-# sq = SuperQueens.new(7)
-# f = sq.start
-# a = Astar.new(f, sq.goal, f.node.method(:heuristic).to_proc)
-# result = a.search
-puts result
-puts result.last.attacks
 
-# todo: in the runner, if you can get to a solution with n attacks, try for n-1
+if result == :failure
+  puts "No acceptable placement was found"
+else
+  puts "An optimal placement for a board of size #{size}:"
+  puts result.last.node
+  puts
+  puts "There are #{result.last.attacks} attacking pairs"
+end
