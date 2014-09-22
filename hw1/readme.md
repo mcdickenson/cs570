@@ -19,6 +19,8 @@ Once an instance of the Astar has been created, the `search` function can be cal
 
 `fifteens_knight_runner.rb` contains a Ruby script that takes input from STDIN, creates an instance of the Fifteens Puzzle, searches for a solution with A*, and prints the output.
 
+`tilepuzmcd31` is the executable. If for some reason it is not executable on your system, run `chmod 755 tilepuzmcd31`.
+
 ## Input 
 
 Because the `fifteens_knight_runner` script accepts input from STDIN it can be run in several ways. The input specified in the homework is stored in `knight_input.txt `. Here are some examples for running the script with this input:

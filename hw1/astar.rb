@@ -18,7 +18,7 @@ class Astar
 
     until to_visit.empty? do
       current = to_visit.sort_by { |node| estimated_cost[node] }.first
-      puts "current: #{current}"
+      # puts "current: #{current}"
       return path_from(path_so_far, current) if current == goal
 
       to_visit.delete(current)
