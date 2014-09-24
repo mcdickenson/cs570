@@ -58,9 +58,9 @@ class SuperQueens
       str = ""
       (0..@size-1).each do |row|
         cols = @columns.each_index.select { |i| @columns[i]==row}
-        r = [0]*@size
-        cols.each { |i| r[i] = 1 }
-        str += r.join(" ") + "\n"
+        r = ["_"]*@size
+        cols.each { |i| r[i] = "Q" }
+        str += r.join(",") + "\n"
       end
       str
     end

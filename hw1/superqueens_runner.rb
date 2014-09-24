@@ -22,13 +22,12 @@ while result == :failure && max_attacks < size
   max_attacks += 1
 end
 
-# result.each { |x| puts x.node; puts }
-
-if result == :failure
-  puts "No acceptable placement was found"
-else
-  puts "An optimal placement for a board of size #{size}:"
-  puts result.last.node
-  puts
-  puts "There are #{result.last.attacks} attacking pairs"
+File.open('queens-mcd31.csv', 'w') do |file|
+  if result == :failure
+    file.puts "No acceptable placement was found"
+  else
+    file.puts "There are #{result.last.attacks} attacking pairs"
+    file.puts "An optimal placement for a board of size #{size}:"
+    file.puts result.last.node    
+  end
 end
