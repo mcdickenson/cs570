@@ -1,0 +1,9 @@
+There are 3 attacking pairs
+An optimal placement for a board of size 7:
+_,_,_,_,Q,_,_
+Q,_,_,_,_,_,_
+_,Q,_,_,_,_,_
+_,_,_,_,_,Q,_
+_,_,_,_,_,_,Q
+_,_,Q,_,_,_,_
+_,_,_,Q,_,_,_
