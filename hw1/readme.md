@@ -13,11 +13,11 @@ Once an instance of the Astar implementation has been created, the `search` func
 
 # Problem 1: Fifteens Puzzle with Knight Moves
 
-`fifteens.rb` contains a Ruby implementation for creating instances of the Fifteens Puzzle with knight moves.
+`fifteens.rb` contains a Ruby implementation for creating instances of the Fifteens Puzzle with knight moves. It relies on the file `knight_distance.txt` as part of the heuristic computation.
 
-`fifteens_knight_runner.rb` contains a Ruby script that takes input from STDIN, creates an instance of the Fifteens Puzzle, searches for a solution with A*, and prints the output.
+`fifteens_runner.rb` contains a Ruby script that takes input from STDIN, creates an instance of the Fifteens Puzzle, searches for a solution with A*, and prints the output.
 
-`tilepuzmcd31` is the executable version of fifteens.rb. If for some reason it is not executable on your system, run `chmod 755 tilepuzmcd31`. It can be run with `./tilepuzmcd31 "tilepuzinput.txt"`. 
+`tilepuzmcd31` is the executable version of `fifteens_runner.rb`. If for some reason it is not executable on your system, run `chmod 755 tilepuzmcd31`. It can be run with `./tilepuzmcd31 "tilepuzinput.txt"`. 
 
 The output prints states of the puzzle (including the initial state), separated by newlines, as well as the length of the optimal solution. Output is directed to `tilepuz-mcd31.txt`.
 
