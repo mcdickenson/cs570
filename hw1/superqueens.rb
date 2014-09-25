@@ -34,6 +34,8 @@ class SuperQueens
   end
 
   class SearchNode
+    attr_reader :columns
+
     def initialize(columns)
       @columns = columns
       @size = @columns.size
@@ -50,10 +52,6 @@ class SuperQueens
       str
     end
 
-    def [](x)
-      @columns[x]
-    end
-
     def neighbors
       @neighbors ||= valid_moves.map do |x|
         sn = SearchNode.new(x)
@@ -67,13 +65,15 @@ class SuperQueens
     end
 
     def collisions(x1, y1, x2, y2)
-      (x1-x2).abs == (y1-y2).abs or
-      [(x1-x2).abs, (y1-y2).abs] == [1, 2] or
-      [(x1-x2).abs, (y1-y2).abs] == [2, 1]
+      diffx = (x1-x2).abs
+      diffy = (y1-y2).abs
+      diffx == diffy or
+      [diffx, diffy] == [1, 2] or
+      [diffx, diffy] == [2, 1]
     end
 
     def heuristic(state=@columns, goal=0)
-      state = state.node if state.respond_to? :node
+      state = state.node.columns if state.respond_to? :node
       attacking_pairs = 0
       (0..@size-1).each do |col1|
         (col1+1..@size-1).each do |col2|
