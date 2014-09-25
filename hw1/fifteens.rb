@@ -11,21 +11,16 @@ class Fifteens
     @goal  = SearchNode.new(GOAL)
   end
 
-  def to_s
-    "#{@start}"
-  end
-
   def heuristic(node, goal=@goal)
     dist = 0
     goal.state.each_with_index do |row, row_ix|
       row.each_with_index do |cell, col_ix|
         current_row, current_col = Fifteens.find_position(cell, node.state)
         next if current_row == row_ix and current_col == col_ix
-        k = knight_dist(row_ix, col_ix, current_row, current_col)
-        dist += k
+        dist += knight_dist(row_ix, col_ix, current_row, current_col)
       end
     end
-    dist / 2.0
+    dist / 2.0 # accounts for double-counting
   end
 
   def knight_dist(x1, y1, x2, y2)
@@ -98,7 +93,5 @@ class Fifteens
       Marshal.load(Marshal.dump(obj))
     end
   end
-
-
 
 end
