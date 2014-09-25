@@ -51,10 +51,7 @@ class Fifteens
 
     def to_s
       out = ""
-      state.each do |row|
-        row.each { |i| out += " " * (1+(1-(i/10))) + i.to_s }
-        out += "\n"
-      end
+      state.each { |row| out += row.join(",") + "\n" }
       out += "\n"
     end
 
