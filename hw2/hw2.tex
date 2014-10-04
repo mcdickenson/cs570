@@ -1,0 +1,153 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{fullpage}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage[margin=3cm]{geometry}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{CS570}
+\newcommand\semester{Fall 2014}     % <-- current semester
+\newcommand\hwnum{2}                  % <-- homework number
+\newcommand\yourname{Matt Dickenson} % <-- your name
+\newcommand\login{mcd31}           % <-- your NetID
+\newcommand\hwdate{Due: October 17, 2014}           % <-- HW due date
+
+\newcommand\myand{\wedge}
+\newcommand\myor{\vee}
+\newcommand\mynot{\neg}
+\renewcommand\implies{\Rightarrow}
+
+\newenvironment{answer}[1]{
+  \subsubsection*{Problem #1}
+}
+
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\yourname\ \texttt{\login}\\\course\ --- \semester}
+\chead{\textbf{\Large Homework \hwnum}}
+\rhead{\hwdate}
+\headsep 10pt
+
+\begin{document}
+
+
+
+
+\begin{answer}{1}
+
+\paragraph{a)} Every continent that is not Australia or Antarctica is connected to another continent. 
+
+\begin{eqnarray*}
+\forall x &:& ((\text{IsContinent}(x) \myand \mynot (\text{IsAustralia}(x)) \myand \mynot (\text{IsAntarctica}(x))) \implies \\
+&& ~~\exists y : (\text{IsContinent}(x) \myand \text{IsConnectedTo}(x, y)))
+\end{eqnarray*}
+
+
+\paragraph{b)} Every person who is smart and studies hard will get a higher score than every person who is not smart and does not study hard.
+
+\begin{eqnarray*}
+\forall x, y &:& (\text{IsPerson}(x) \myand \text{IsPerson}(y) \implies \\
+&& ~~(\text{IsSmart}(x) \myand \text{StudiesHard}(x) \myand \\
+&& ~~\mynot(\text{IsSmart}(y)) \myand \mynot(\text{StudiesHard}(y)) \implies \\
+&& ~~~~\text{GetsHigherScoreThan}(x,y)))
+\end{eqnarray*}
+
+\paragraph{c)} Everything that walks like a duck and talks like a duck is either a duck or a human imitating a duck.
+
+\begin{eqnarray*}
+\forall x &:& ((\text{WalksLike}(x, \text{Duck}) \myand \text{TalksLike}(x, \text{Duck})) \implies \\
+&& ~~ (\text{Is}(x, \text{Duck}) \myor (\text{Is}(x, \text{Human}) \myand \text{IsImitating}(x, \text{Duck}))))
+\end{eqnarray*}
+
+\end{answer}
+
+\paragraph{d)} A gold medal is worth more than a silver medal if they are medals in the same event.
+
+\begin{eqnarray*}
+\forall x, y &:& ((\text{IsMedal}(x) \myand \text{IsMedal}(y) \myand \mynot(x=y)) \implies \\
+&& ~~(\text{IsGold}(x) \myand \text{IsSilver}(y) \myand \text{InSameEvent}(x, y) \implies \\
+&& ~~~~\text{IsWorthMoreThan}(x, y))
+)
+\end{eqnarray*}
+
+\paragraph{e)} Every thing that loves all humans is a dog.
+
+\begin{eqnarray*}
+\forall x, y &:& (\text{Is}(x, \text{Human}) \myand \text{Loves}(y, x) \implies (\text{Is}(x, \text{Dog})))
+\end{eqnarray*}
+
+\paragraph{f)} There is a dog that does not love all humans.
+
+\begin{eqnarray*}
+\exists x &:& \exists y : (\text{Is}(x, \text{Dog}) \myand \text{Is}(y, \text{Human}) \myand \mynot(\text{Loves}(x, y)))
+\end{eqnarray*}
+
+\paragraph{g)} Every thing that is an enemy of some thing that is an enemy of me is a friend of me.
+
+\begin{eqnarray*}
+\forall x, y &:& (\text{IsEnemyOf}(x, \text{Me}) \myand \text{IsEnemyOf}(y, x) \implies \text{IsFriendOf}(y, \text{Me}))
+\end{eqnarray*}
+
+\paragraph{h)} There are at least two points on the world such that if from that point $x$ you travel one meter North, then one meter East, then one meter South, you are back at point $x$.
+
+\begin{eqnarray*}
+\exists x, y &:& (\mynot(x=y) \myand \\
+&& (x=\text{OneMeterInDirectionFrom}(\text{South}, \text{OneMeterInDirectionFrom}(\text{East}, \\
+&& ~~~~\text{OneMeterInDirectionFrom}(\text{North}, x)))) \myand \\
+&& (y=\text{OneMeterInDirectionFrom}(\text{South}, \text{OneMeterInDirectionFrom}(\text{East}, \\
+&& ~~~~\text{OneMeterInDirectionFrom}(\text{North}, y)))))
+\end{eqnarray*}
+
+\paragraph{Bonus}: The set of all these points contains the magnetic South Pole and the terrestrial South Pole. (From the North Pole you can go no further north. From any point lying on the circle one meter north of the South Pole, the point one meter south is the pole. However, the terrestrial and magnetic poles differ, so there are two such points.)
+
+
+
+\begin{answer}{2}
+
+Given: 
+\begin{eqnarray*}
+\forall x, y &:& \text{LovesTheCombinationOf}(\text{John}, x, y) \myor \text{MakesSick}(x, \text{John}) \myor \text{RuinsTasteOf}(y, x) \\
+\forall v, w &:& \mynot \text{LovesTheCombinationOf}(v, \text{Rice}, w) \myor \text{Flavorful}(w)
+\end{eqnarray*}
+
+Substitution: $\{v/\text{John}, w/z, x/\text{Rice}, y/z \}$.
+
+\begin{eqnarray*}
+\forall z &:& (\text{LovesTheCombinationOf}(\text{John}, \text{Rice}, z) \myor \text{MakesSick}(\text{Rice}, \text{John}) \myor \text{RuinsTasteOf}(z, \text{Rice})) \myand \\
+&& (\mynot \text{LovesTheCombinationOf}(\text{John}, \text{Rice}, z) \myor \text{Flavorful}(z))
+\end{eqnarray*}
+
+% note: can we drop things that don't depend on z?
+Resolution:
+
+\begin{eqnarray*}
+\forall z &:& \text{MakesSick}(\text{Rice}, \text{John}) \myor \text{RuinsTasteOf}(z, \text{Rice})) \myor \text{Flavorful}(z)
+\end{eqnarray*}
+
+\end{answer}
+
+\begin{answer}{3}
+
+Adding the negated sentence to the knowledge base and substituting Skolem functions for universals yields the following.
+
+\begin{eqnarray}
+&& (\mynot \text{EnemyOf}(y, x) \myor \mynot \text{EnemyOf}(z, y) \myor \text{FriendOf}(z, x)) \myand \\
+&& (\mynot \text{EnemyOf}(y, x) \myor \text{EnemyOf}(x, y)) \myand \\
+&& \text{EnemyOf}(a(x), x) \myand \\
+&& \text{EnemyOf}(b(x), y) \myand \\
+&& (\mynot (b(x) = a(x) )) \myand \\
+&& \text{FriendOf}(c(x), x) \myand \\
+&& (x = c(x)) \myand \\
+&& (\mynot \text{EnemyOf}(z, a(x)) \myor \text{FriendOf}(z,x))~~(\text{by 1 and 3 with subst} \{ y/a(x) \})
+\end{eqnarray}
+
+\end{answer}
+
+\end{document}

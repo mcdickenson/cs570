@@ -8,6 +8,8 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+**/*.aux
+**/*.log
 
 ## Specific to RubyMotion:
 .dat*
