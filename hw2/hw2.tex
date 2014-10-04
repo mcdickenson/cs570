@@ -45,25 +45,25 @@
 \paragraph{a)} Every continent that is not Australia or Antarctica is connected to another continent. 
 
 \begin{eqnarray*}
-\forall x &:& ((\text{IsContinent}(x) \myand \mynot (\text{IsAustralia}(x)) \myand \mynot (\text{IsAntarctica}(x))) \implies \\
-&& ~~\exists y : (\text{IsContinent}(x) \myand \text{IsConnectedTo}(x, y)))
+\forall x &:& ((\text{Continent}(x) \myand \mynot (\text{Australia}(x)) \myand \mynot (\text{Antarctica}(x))) \implies \\
+&& ~~\exists y : (\text{Continent}(y) \myand \text{Connected}(x, y)))
 \end{eqnarray*}
 
 
 \paragraph{b)} Every person who is smart and studies hard will get a higher score than every person who is not smart and does not study hard.
 
 \begin{eqnarray*}
-\forall x, y &:& (\text{IsPerson}(x) \myand \text{IsPerson}(y) \implies \\
-&& ~~(\text{IsSmart}(x) \myand \text{StudiesHard}(x) \myand \\
-&& ~~\mynot(\text{IsSmart}(y)) \myand \mynot(\text{StudiesHard}(y)) \implies \\
+\forall x, y &:& (\text{Person}(x) \myand \text{Person}(y) \implies \\
+&& ~~(\text{Smart}(x) \myand \text{StudiesHard}(x) \myand \\
+&& ~~\mynot(\text{Smart}(y)) \myand \mynot(\text{StudiesHard}(y)) \implies \\
 && ~~~~\text{GetsHigherScoreThan}(x,y)))
 \end{eqnarray*}
 
 \paragraph{c)} Everything that walks like a duck and talks like a duck is either a duck or a human imitating a duck.
 
 \begin{eqnarray*}
-\forall x &:& ((\text{WalksLike}(x, \text{Duck}) \myand \text{TalksLike}(x, \text{Duck})) \implies \\
-&& ~~ (\text{Is}(x, \text{Duck}) \myor (\text{Is}(x, \text{Human}) \myand \text{IsImitating}(x, \text{Duck}))))
+\forall x &:& ((\text{WalksLikeDuck}(x) \myand \text{TalksLikeDuck}(x)) \implies \\
+&& ~~ (\text{Duck}(x) \myor (\text{Human}(x) \myand \text{ImitatingDuck}(x))))
 \end{eqnarray*}
 
 \end{answer}
@@ -71,38 +71,42 @@
 \paragraph{d)} A gold medal is worth more than a silver medal if they are medals in the same event.
 
 \begin{eqnarray*}
-\forall x, y &:& ((\text{IsMedal}(x) \myand \text{IsMedal}(y) \myand \mynot(x=y)) \implies \\
-&& ~~(\text{IsGold}(x) \myand \text{IsSilver}(y) \myand \text{InSameEvent}(x, y) \implies \\
-&& ~~~~\text{IsWorthMoreThan}(x, y))
+\forall x, y &:& ((\text{Medal}(x) \myand \text{Medal}(y) \myand \mynot(x=y)) \implies \\
+&& ~~(\text{Gold}(x) \myand \text{Silver}(y) \myand (\text{Event}(x) = \text{Event}(y)) \implies \\
+&& ~~~~\text{WorthMoreThan}(x, y))
 )
 \end{eqnarray*}
 
 \paragraph{e)} Every thing that loves all humans is a dog.
 
 \begin{eqnarray*}
-\forall x, y &:& (\text{Is}(x, \text{Human}) \myand \text{Loves}(y, x) \implies (\text{Is}(x, \text{Dog})))
+\forall x, y &:& (\text{Human}(x) \myand \text{Loves}(y, x) \implies (\text{Dog}(x)))
 \end{eqnarray*}
 
 \paragraph{f)} There is a dog that does not love all humans.
 
 \begin{eqnarray*}
-\exists x &:& \exists y : (\text{Is}(x, \text{Dog}) \myand \text{Is}(y, \text{Human}) \myand \mynot(\text{Loves}(x, y)))
+\exists x &:& \exists y : (\text{Dog}(x) \myand \text{Human}(y) \myand \mynot(\text{Loves}(x, y)))
 \end{eqnarray*}
 
 \paragraph{g)} Every thing that is an enemy of some thing that is an enemy of me is a friend of me.
 
 \begin{eqnarray*}
-\forall x, y &:& (\text{IsEnemyOf}(x, \text{Me}) \myand \text{IsEnemyOf}(y, x) \implies \text{IsFriendOf}(y, \text{Me}))
+\forall x, y &:& (\text{EnemyOf}(x, \text{Me}) \myand \text{EnemyOf}(y, x) \implies \text{FriendOf}(y, \text{Me}))
 \end{eqnarray*}
 
 \paragraph{h)} There are at least two points on the world such that if from that point $x$ you travel one meter North, then one meter East, then one meter South, you are back at point $x$.
 
+% \begin{eqnarray*}
+% \exists x, y &:& (\mynot(x=y) \myand \\
+% && (x=\text{OneMeterInDirectionFrom}(\text{South}, \text{OneMeterInDirectionFrom}(\text{East}, \\
+% && ~~~~\text{OneMeterInDirectionFrom}(\text{North}, x)))) \myand \\
+% && (y=\text{OneMeterInDirectionFrom}(\text{South}, \text{OneMeterInDirectionFrom}(\text{East}, \\
+% && ~~~~\text{OneMeterInDirectionFrom}(\text{North}, y)))))
+% \end{eqnarray*}
+
 \begin{eqnarray*}
-\exists x, y &:& (\mynot(x=y) \myand \\
-&& (x=\text{OneMeterInDirectionFrom}(\text{South}, \text{OneMeterInDirectionFrom}(\text{East}, \\
-&& ~~~~\text{OneMeterInDirectionFrom}(\text{North}, x)))) \myand \\
-&& (y=\text{OneMeterInDirectionFrom}(\text{South}, \text{OneMeterInDirectionFrom}(\text{East}, \\
-&& ~~~~\text{OneMeterInDirectionFrom}(\text{North}, y)))))
+\exists x, y &:& (\mynot(x=y) \myand x=1mS(1mE(1mN(x)))) \myand y=1mS(1mE(1mN(y))))
 \end{eqnarray*}
 
 \paragraph{Bonus}: The set of all these points contains the magnetic South Pole and the terrestrial South Pole. (From the North Pole you can go no further north. From any point lying on the circle one meter north of the South Pole, the point one meter south is the pole. However, the terrestrial and magnetic poles differ, so there are two such points.)
