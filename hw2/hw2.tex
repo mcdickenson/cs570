@@ -1,4 +1,4 @@
-\documentclass[12pt,letterpaper]{article}
+\documentclass[12pt,letterpaper,leqno]{article}
 \usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
 \usepackage{fullpage}
 \usepackage{lastpage}
@@ -139,18 +139,24 @@ Resolution:
 
 \begin{answer}{3}
 
-Adding the negated sentence to the knowledge base and substituting Skolem functions for universals yields the following.
+We can show that every $x$ must have a friend other than themselves. Starting from the three sentences given and adding the negated goal sentence, we arrive at a contradiction:
 
-\begin{eqnarray}
-&& (\mynot \text{EnemyOf}(y, x) \myor \mynot \text{EnemyOf}(z, y) \myor \text{FriendOf}(z, x)) \myand \\
-&& (\mynot \text{EnemyOf}(y, x) \myor \text{EnemyOf}(x, y)) \myand \\
-&& \text{EnemyOf}(a(x), x) \myand \\
-&& \text{EnemyOf}(b(x), y) \myand \\
-&& (\mynot (b(x) = a(x) )) \myand \\
-&& \text{FriendOf}(c(x), x) \myand \\
-&& (x = c(x)) \myand \\
-&& (\mynot \text{EnemyOf}(z, a(x)) \myor \text{FriendOf}(z,x))~~(\text{by 1 and 3 with subst} \{ y/a(x) \})
-\end{eqnarray}
+\begin{align}
+\forall x &:& \forall y : \forall z : (\text{EnemyOf}(y,x) \myand \text{EnemyOf}(z, y)) \implies \text{FriendOf}(z,x) \\
+\forall x &:& \forall y : \text{EnemyOf}(x, y) \implies \text{EnemyOf(y, x)} \\
+\forall x &:& \exists y : \exists z : \text{EnemyOf}(y, x) \myand \text{EnemyOf}(z, x) \myand \mynot(y=z) \\
+\forall x &:& \forall y : \mynot (\text{FriendOf}(x, y)) \myor (x=y) \hfill (\text{for contradiction}) \\
+\forall x &:& \text{EnemyOf}(k_1(x), x) \myand \text{EnemyOf}(k_2(x), x) \myand \mynot(k_1(x) = k_2(x)) && (\text{Skolem}) \\
+\forall x &:& \text{EnemyOf}(x, k_1(x)) \myand \text{EnemyOf}(x, k_2(x)) && (2) \& (5) \\
+\forall x &:& \text{EnemyOf}(k_1(x), k_1(k_1(x))) \myand EnemyOf(k_1(x), k_1(k_2(x))) && (6) \\
+\forall x &:& \text{FriendOf}(x, k_1(k_1(x))) && (6) \& (2)\\
+\forall x &:& \text{FriendOf}(x, k_1(k_2(x))) && (6) \& (2)\\
+\forall x &:& \mynot(k_1(k_1(x)) = k_1(k_2(x))) && (5) \\
+\forall x &:& (k_1(k_1(x)) = k_1(k_2(x)))  && (4) \& (8) \& (9) \\
+&& () && (10) \& (11) 
+\end{align}
+
+Informally, $x$'s two enemies must each have two enemies of their own, at least one of which is not $x$. Thus, $x$ has a friend not equal to itself.
 
 \end{answer}
 
