@@ -3,7 +3,7 @@ ff: parsing domain file
 domain 'FAMILY-DOMAIN' defined
  ... done.
 ff: parsing problem file
-problem 'FAMILY-3' defined
+problem 'FAMILY-4' defined
  ... done.
 
 
