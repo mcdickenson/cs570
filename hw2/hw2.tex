@@ -109,7 +109,7 @@
 \exists x, y &:& (\mynot(x=y) \myand x=1mS(1mE(1mN(x)))) \myand y=1mS(1mE(1mN(y))))
 \end{eqnarray*}
 
-\paragraph{Bonus}: The set of all these points contains the magnetic South Pole and the terrestrial South Pole. (From the North Pole you can go no further north. From any point lying on the circle one meter north of the South Pole, the point one meter south is the pole. However, the terrestrial and magnetic poles differ, so there are two such points.)
+\paragraph{Bonus}: The set of all these points consists of the magnetic South Pole and the terrestrial South Pole. (From the North Pole you can go no further north. From any point lying on the circle one meter north of the South Pole, the point one meter south is the pole. However, the terrestrial and magnetic poles differ, so there are two such points.)
 
 
 
@@ -145,10 +145,10 @@ We can show that every $x$ must have a friend other than themselves. Starting fr
 \forall x &:& \forall y : \forall z : (\text{EnemyOf}(y,x) \myand \text{EnemyOf}(z, y)) \implies \text{FriendOf}(z,x) \\
 \forall x &:& \forall y : \text{EnemyOf}(x, y) \implies \text{EnemyOf(y, x)} \\
 \forall x &:& \exists y : \exists z : \text{EnemyOf}(y, x) \myand \text{EnemyOf}(z, x) \myand \mynot(y=z) \\
-\forall x &:& \forall y : \mynot (\text{FriendOf}(x, y)) \myor (x=y) \hfill (\text{for contradiction}) \\
+\forall x &:& \forall y : \mynot (\text{FriendOf}(x, y)) \myor (x=y) \hfill  \\
 \forall x &:& \text{EnemyOf}(k_1(x), x) \myand \text{EnemyOf}(k_2(x), x) \myand \mynot(k_1(x) = k_2(x)) && (\text{Skolem}) \\
 \forall x &:& \text{EnemyOf}(x, k_1(x)) \myand \text{EnemyOf}(x, k_2(x)) && (2) \& (5) \\
-\forall x &:& \text{EnemyOf}(k_1(x), k_1(k_1(x))) \myand EnemyOf(k_1(x), k_1(k_2(x))) && (6) \\
+\forall x &:& \text{EnemyOf}(k_1(x), k_1(k_1(x))) \myand \text{EnemyOf}(k_1(x), k_1(k_2(x))) && (6) \\
 \forall x &:& \text{FriendOf}(x, k_1(k_1(x))) && (6) \& (2)\\
 \forall x &:& \text{FriendOf}(x, k_1(k_2(x))) && (6) \& (2)\\
 \forall x &:& \mynot(k_1(k_1(x)) = k_1(k_2(x))) && (5) \\
