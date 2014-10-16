@@ -3,8 +3,7 @@
   (:predicates (male ?x) (female ?x) (not-yet-born ?x) (is-parent-of ?x ?y)
   (is-child-of ?x ?y) (is-sibling-of ?x ?y) (is-uncle-or-aunt-of ?x ?y)
   (is-nephew-or-niece-of ?x ?y)
-  (is-granduncle-or-grandaunt-of ?x ?y)
-  (is-grandnephew-or-grandniece-of ?x ?y)) 
+  (is-granduncle-or-grandaunt-of ?x ?y)) 
   (:action give-birth-to-son
    	   :parameters (?father ?mother ?child)
   	   :precondition (and (male ?father)
@@ -42,5 +41,4 @@
        :parameters (?granduncle ?parent ?child)
      :precondition (and (is-parent-of ?parent ?child)
               (is-nephew-or-niece-of ?parent ?granduncle))
-           :effect  (and(is-granduncle-or-grandaunt-of ?granduncle ?child)
-           (is-grandnephew-or-grandniece-of ?child ?granduncle))))
+           :effect (is-granduncle-or-grandaunt-of ?granduncle ?child)))
