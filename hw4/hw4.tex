@@ -1,0 +1,114 @@
+\documentclass[12pt,letterpaper,leqno]{article}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{fullpage}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage[margin=3cm]{geometry}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{CS570}
+\newcommand\semester{Fall 2014}     % <-- current semester
+\newcommand\hwnum{4}                  % <-- homework number
+\newcommand\yourname{Matt Dickenson} % <-- your name
+\newcommand\login{mcd31}           % <-- your NetID
+\newcommand\hwdate{Due: November 7, 2014}           % <-- HW due date
+
+\newcommand\myand{\wedge}
+\newcommand\myor{\vee}
+\newcommand\mynot{\neg}
+\renewcommand\implies{\Rightarrow}
+
+\newenvironment{answer}[1]{
+  \subsubsection*{Problem #1}
+}
+
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\yourname\ \texttt{\login}\\\course\ --- \semester}
+\chead{\textbf{\Large Homework \hwnum}}
+\rhead{\hwdate}
+\headsep 10pt
+
+\begin{document}
+
+
+
+
+\begin{answer}{1}
+
+We can find $P(+u | +e )$ by finding $P(+u , +e )$ and $P(-u , +e )$.
+
+\begin{eqnarray*}
+P(+u, +e) &=& \sum_t P(+e | +u, t) \sum_i P(t | i) P(i) \sum_h P(+u | i, h) P(h) \\
+          &=& \sum_t P(+e | +u, t) \sum_i P(t | i) P(i) f_1(i) \\
+          &=& \sum_t P(+e | +u, t) f_2(t) \\
+          &=& f_3 \\
+f_1(-i) &=& P(+u | -i, -h)P(-h) + P(+u|-i, +h)P(+h) \\
+        &=& 0.1 (0.4) + 0.5 (0.6) = 0.34 \\
+f_1(+i) &=& P(+u | +i, -h)P(-h) + P(+u|+i, +h)P(+h) \\
+        &=& 0.3 (0.4) + 0.9 (0.6) = 0.66 \\
+f_2(+t) &=& P(+t | -i)f_1(-i)P(-i) + P(+t | +i)f_1(+i)P(+i) \\
+        &=& .119 + .1584 = 0.2774 \\
+f_2(-t) &=& P(-t | -i)f_1(-i)P(-i) + P(-t | +i)f_1(+i)P(+i) \\
+        &=& .119 + .0396 = 0.1586 \\ 
+f_3 &=& P(+e | +u, +t)f_2(+t) + P(+e | +u, -t)f_2(-t) \\
+    &=& 0.9 (0.2774) + 0.7 (0.11102) \\
+    &=& 0.36068  \\
+P(+u, +e) &=& 0.36068 
+\end{eqnarray*}
+
+\begin{eqnarray*}
+P(-u, +e) &=& \sum_t P(+e | -u, t) \sum_i P(t | i) P(i) \sum_h P(-u | i, h) P(h) \\
+          &=& \sum_t P(+e | -u, t) \sum_i P(t | i) P(i) f_1(i) \\
+          &=& \sum_t P(+e | -u, t) f_2(t) \\
+          &=& f_3 \\
+f_1(-i) &=& P(-u | -i, -h)P(-h) + P(-u|-i, +h)P(+h) \\
+        &=& 0.9 (0.4) + 0.5 (0.6) = 0.66 \\
+f_1(+i) &=& P(-u | +i, -h)P(-h) + P(-u|+i, +h)P(+h) \\
+        &=& 0.7 (0.4) + 0.1 (0.6) = 0.34 \\
+f_2(+t) &=& P(+t | -i)f_1(-i)P(-i) + P(+t | +i)f_1(+i)P(+i) \\
+        &=& .099 + .1904 = .2894 \\
+f_2(-t) &=& P(-t | -i)f_1(-i)P(-i) + P(-t | +i)f_1(+i)P(+i) \\
+        &=& .099 + .0476 = 0.1466 \\ 
+f_3 &=& P(+e | -u, +t)f_2(+t) + P(+e | -u, -t)f_2(-t) \\
+    &=& 0.5 (0.2894) + 0.3 (0.1466) \\
+    &=& 0.18868  \\
+P(-u, +e) &=& 0.18868
+\end{eqnarray*}
+
+
+\begin{eqnarray*}
+P(+u | +e ) &=& {P(+u, +e) \over P(+e)} \\
+&=& {P(+u, +e) \over P(+u, +e)+ P(-u, +e)} \\
+&=& 0.36068 \over 0.36068 + 0.18868 \\
+&=& 0.36068 \over 0.54936 \\
+&=& 0.6565458 \approx 0.66
+\end{eqnarray*}
+
+
+\end{answer}
+
+\begin{answer}{2}
+
+\begin{enumerate}
+\item FALSE: $T$ and $U$ are dependent through $I$
+\item FALSE: There is a path from $T$ to $U$ through $E$ that is active because $E$ is in the given set
+\item TRUE: The path from $T$ to $U$ through $I$ is blocked because $I$ is given, and the path through $E$ is inactive because $E$ is not given
+\item FALSE: Although the direct path from $H$ to $E$ is blocked since $U$ is given the path from through $U$, $I$, and $T$ is active
+\item TRUE: The direct path through $U$ is blocked because $U$ is given, and the indirect path through $I$ and $T$ are blocked because $I$ and $T$ are given
+\item FALSE: There is a dependency between $I$ and $H$ through $U$ because its child $E$ is included in the given set
+\item TRUE: The direct path through the collider $U$ is inactive, and the indirect path through $T$ is blocked because $T$ is given
+\item TRUE: Both paths between $T$ and $H$ have colliders and the given set is empty, so these paths are inactive
+\item FALSE: There is an active path from $H$ to $T$ because the collider $E$ is given
+\item FALSE: Since $U$ is given the path in (9) is blocked, but it activates the path from $H$ to $T$ through $U$ and $I$.  
+\end{enumerate}
+
+\end{answer}
+
+\end{document}
