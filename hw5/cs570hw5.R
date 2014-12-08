@@ -49,9 +49,9 @@ utils["bottom", "not.drive"]  = 1
 ##################################
 
 delta     = 0.8
-max_iters = 25
+max_iters = 100
 v = matrix(0, nrow=length(states), ncol=max_iters)
-rownames(v) = rownames(a) = states
+rownames(v) = states
 options = list("drive" = 0, "not.drive" = 0)
 
 iters = 2
@@ -72,7 +72,7 @@ while (iters <= max_iters) {
 	iters = iters + 1
 }
 
-v[ , max_iters]
+print(v[ , max_iters])
 
 
 
